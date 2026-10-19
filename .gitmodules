@@ -1,0 +1,3 @@
+[submodule "SAE_S5-Frontend"]
+	path = SAE_S5-Frontend
+	url = https://github.com/krishna171826/SAE_S5-Frontend.git
