@@ -16,6 +16,10 @@ Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. Cette applicat
 
 ## 📂 Architecture du Projet (Submodules)
 
+# Qu'est-ce qu'un sous-module Git ?
+Un sous-module permet d'inclure un dépôt Git indépendant à l'intérieur d'un autre. Dans notre projet, le dépôt principal pointe vers les sous-dossiers front et back. Il est donc crucial d'initialiser et de mettre à jour ces sous-modules correctement lors du clonage du projet.
+
+
 Le dépôt principal utilise des **sous-modules Git** pour organiser le code source :
 * `sae-front/` : Code source de l'interface utilisateur (React).
 * `sae-back/` : Code source du serveur Express et du sous-dossier `recommendation-engine/` (FastAPI).
@@ -36,6 +40,28 @@ cd SAE_S5
 > ```bash
 > git submodule update --init --recursive
 > ```
+>
+---
+
+## 🌿 Workflow de Développement & Collaboration (Git / GitHub)
+
+Pour travailler efficacement en équipe et éviter les conflits, nous adoptons le processus suivant :
+
+1. **Gestion des tâches (Issues) :** Pour toute nouvelle fonctionnalité ou correction, référez-vous à l'onglet **Issues** de GitHub pour identifier votre tâche.
+2. **Création d'une branche dédiée :** Ne codez jamais directement sur la branche principale (`main`). Créez une nouvelle branche pour votre fonctionnalité :
+   ```bash
+   git checkout -b feature/nom-de-la-fonctionnalite
+   ```
+3. **Développement et commit :** Effectuez vos modifications, testez-les localement, puis poussez votre branche sur GitHub :
+   ```bash
+   git add .
+   git commit -m "feat: ajout de la fonctionnalité X"
+   git push origin feature/nom-de-la-fonctionnalite
+   ```
+4. **Pull Request (PR) :** Une fois le travail terminé, ouvrez une **Pull Request (PR)** sur GitHub.
+5. **Validation et Fusion :** **Informez le chef d'équipe** que votre PR est prête. Il procédera à la relecture et effectuera le **`git merge`** sur la branche principale.
+
+---
 
 ---
 
@@ -61,20 +87,3 @@ cd sae-front
 npm install
 npm run dev
 ```
-
-L'application web sera accessible localement sur : `http://localhost:5173`.
-
----
-
-## 🩺 Vérification des services (Routes de santé)
-
-Vous pouvez vérifier que chaque brique logicielle répond correctement :
-* **Backend Express :** `http://localhost:3000/health`
-* **Moteur Python (FastAPI) :** `http://localhost:8000/health`
-* **Base de données :** Connectez-vous via DBeaver sur `localhost:5432` (utilisateurs/mdp définis dans le `compose.yaml`).
-
----
-
-## 👥 Conventions de contribution
-* Branches : `main` (production), `dev` (intégration), `feat/nom-de-fonctionnalite` (développement).
-* Commits conventionnels conseillés : `feat:`, `fix:`, `docs:`, `refactor:`.
