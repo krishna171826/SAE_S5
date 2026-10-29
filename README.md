@@ -66,7 +66,7 @@ Pour travailler efficacement en équipe et éviter les conflits, nous adoptons l
 ---
 
 ### 2. Lancer l'infrastructure Backend & Base de données (avec Docker)
-Les services lourds (PostgreSQL/PostGIS, Express et FastAPI) s'exécutent via Docker Compose. À la racine du projet, lancez :
+Ce projet regroupe une base de données **PostgreSQL** avec l'extension **PostGIS** (indispensable pour la gestion des coordonnées géographiques et spatiales), un **backend Express**, et un **système de recommandation**. L'ensemble est orchestré via **Docker Compose** pour un lancement unifié en une seule commande.
 
 ```bash
 docker compose up --build
@@ -76,6 +76,23 @@ Cela va démarrer :
 * La base de données **PostgreSQL + PostGIS** sur le port .
 * Le moteur de recommandation **FastAPI (Python)** sur le port .
 * Le serveur **Express.js (Node.js)** sur le port .
+
+  ## Commandes utiles
+
+- **Voir les logs en temps réel :**
+  ```bash
+  docker compose logs -f
+  ```
+
+- **Arrêter proprement tous les services :**
+  ```bash
+  docker compose down
+  ```
+
+- **Arrêter et supprimer les volumes (attention, cela efface les données de la base) :**
+  ```bash
+  docker compose down -v
+  ```
 
 ---
 
