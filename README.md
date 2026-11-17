@@ -21,8 +21,8 @@ Un sous-module permet d'inclure un dépôt Git indépendant à l'intérieur d'un
 
 
 Le dépôt principal utilise des **sous-modules Git** pour organiser le code source :
-* `sae-front/` : Code source de l'interface utilisateur (React).
-* `sae-back/` : Code source du serveur Express et du sous-dossier `recommendation-engine/` (FastAPI).
+* `SAE_S5-Frontend/` : Code source de l'interface utilisateur (React).
+* `SAE_S5-Backend/` : Code source du serveur Express et du sous-dossier `recommendation-engine/` (FastAPI).
 
 ---
 
