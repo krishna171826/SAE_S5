@@ -61,12 +61,12 @@ Cette commande récupère le dépôt principal ainsi que ses deux sous-modules :
 Depuis le dossier principal `SAE_S5`, créez le fichier `.env` :
 
 ```bash
-printf 'POSTGRES_PASSWORD=spotly_local_2026\n' > .env
+printf 'POSTGRES_PASSWORD=Choisir_Un_Mot_De_Passe\n' > .env
 ```
 
 Ce fichier configure le mot de passe de PostgreSQL pour une utilisation locale.
 
-> ⚠️ Ce mot de passe est uniquement destiné aux tests locaux. Le fichier `.env` ne doit jamais être envoyé sur GitHub.
+> ⚠️ Ce mot de passe est uniquement destiné aux tests locaux.
 
 ### 3. 🐳 Démarrer les services Docker
 
@@ -92,25 +92,55 @@ Pour vérifier que les conteneurs sont démarrés :
 docker compose ps
 ```
 
+
 ### 4. 🗄️ Initialiser la base de données
 
 **Cette étape est indispensable lors de la première installation.**
 
-Attendez que PostgreSQL soit prêt avec cette commande :
+Assurez-vous que les services Docker sont démarrés avant de continuer.
+
+**1. Accéder au dossier Backend :**
+
+Depuis le dossier principal `SAE_S5` :
 
 ```bash
-docker compose exec db sh -c 'until pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" >/dev/null 2>&1; do sleep 1; done'
+cd SAE_S5-Backend
 ```
 
-Puis appliquez les migrations :
+**2. Installer les dépendances :**
 
 ```bash
-docker compose exec backend sh -c 'DATABASE_URL="postgres://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" npm run migrate up'
+npm install
 ```
 
-Les migrations créent automatiquement les tables nécessaires au fonctionnement de Spotly : activités, catégories, utilisateurs, recherches, recommandations, etc.
+**3. Configurer le fichier `.env` du Backend :**
 
-> **Remarque :** Les migrations déjà appliquées ne sont pas rejouées inutilement.
+Copiez le fichier `.env.exemple` :
+
+```bash
+cp .env.exemple .env
+```
+
+Ouvrez ensuite le fichier `.env` et remplacez `VOTRE_MOT_DE_PASSE_ICI` par le mot de passe PostgreSQL défini à l'étape 2.
+
+Par exemple, si vous avez conservé le mot de passe proposé :
+
+```env
+DATABASE_URL=postgres://sae:Choisir_Un_Mot_De_Passe@localhost:5433/sae_s5
+```
+
+**4. Exécuter les migrations :**
+
+```bash
+npm run migrate up
+```
+
+Cette commande crée automatiquement les tables nécessaires au fonctionnement de Spotly : utilisateurs, activités, catégories, recherches et recommandations.
+
+> ✅ La base de données est maintenant initialisée.
+>
+> Les migrations déjà exécutées ne sont pas appliquées une deuxième fois.
+
 
 ### 5. 💻 Lancer le frontend React
 
@@ -205,30 +235,6 @@ docker compose down
 
 ---
 
-## 📂 Architecture du projet
-
-```text
-SAE_S5/
-│
-├── SAE_S5-Frontend/            # Interface React
-│
-├── SAE_S5-Backend/             # Backend Express
-│   ├── src/                    # Controllers, services, models, routes
-│   ├── migrations/             # Migrations PostgreSQL
-│   └── recommendation-engine/  # Moteur Python FastAPI
-│
-├── compose.yaml                # Configuration Docker
-├── .gitmodules                 # Sous-modules Git
-└── README.md                   # Guide principal
-```
-
-### 📚 Documentation complémentaire
-
-- [Frontend — React](https://github.com/krishna171826/SAE_S5-Frontend)
-- [Backend — Express, PostgreSQL et FastAPI](https://github.com/krishna171826/SAE_S5-Backend)
-
----
-
 ## 🌿 Workflow de développement (Git / GitHub)
 
 Le projet utilise GitHub pour organiser le travail en équipe.
@@ -243,17 +249,4 @@ Chaque sous-module dispose de son propre dépôt Git.
 
 ---
 
-## 📌 État de la version 1
-
-La première version comprend :
-
-- Le questionnaire de recherche.
-- La géolocalisation d'une adresse.
-- La récupération d'activités depuis OpenStreetMap.
-- Le filtrage géographique avec PostgreSQL/PostGIS.
-- La catégorisation des activités.
-- Le calcul des recommandations avec Python/FastAPI.
-- L'affichage des résultats et des scores.
-
-Certaines fonctionnalités, comme la carte interactive complète, les fiches détaillées et la comparaison des performances des algorithmes, seront développées dans les prochaines versions.
 
