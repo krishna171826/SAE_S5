@@ -1,6 +1,6 @@
 # SAE S5 - Plateforme de Recommandation d'Activités Géolocalisées
 
-Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. **Spotly** est une application web permettant aux utilisateurs de rechercher des activités géolocalisées à faire entre amis (via OpenStreetMap et PostGIS), puis de les classer grâce à un algorithme de recommandation par score pondéré.
+Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. **Spovo** est une application web permettant aux utilisateurs de rechercher des activités géolocalisées à faire entre amis (via OpenStreetMap et PostGIS), puis de les classer grâce à un algorithme de recommandation par score pondéré.
 
 ---
 
@@ -29,7 +29,7 @@ Le dépôt principal utilise des **sous-modules Git** pour organiser le code sou
 
 ## 🚀 Guide d'installation et de démarrage
 
-Ce guide permet de lancer **Spotly** sur une machine locale, en suivant les étapes ci-dessous.
+Ce guide permet de lancer **Spovo** sur une machine locale, en suivant les étapes ci-dessous.
 
 ### 📋 Prérequis
 
@@ -135,7 +135,7 @@ DATABASE_URL=postgres://sae:Choisir_Un_Mot_De_Passe@localhost:5433/sae_s5
 npm run migrate up
 ```
 
-Cette commande crée automatiquement les tables nécessaires au fonctionnement de Spotly : utilisateurs, activités, catégories, recherches et recommandations.
+Cette commande crée automatiquement les tables nécessaires au fonctionnement de Spovo : utilisateurs, activités, catégories, recherches et recommandations.
 
 > ✅ La structure de la base de données est maintenant initialisée.
 >
@@ -155,7 +155,7 @@ L'importation peut prendre un certain temps lors de la première installation.
 >
 > Aucun téléchargement supplémentaire ni extraction manuelle n'est nécessaire.
 >
-> Spotly pourra utiliser ces données même si les serveurs Overpass sont temporairement indisponibles.
+> Spovo pourra utiliser ces données même si les serveurs Overpass sont temporairement indisponibles.
 
 **Source des données :** OpenStreetMap, extraction Île-de-France téléchargée depuis Geofabrik, sous licence ODbL. © [Contributeurs OpenStreetMap](https://www.openstreetmap.org/copyright).
 
@@ -181,7 +181,7 @@ Le frontend est maintenant accessible à l'adresse :
 
 ## 🎯 Tester l'application
 
-Une fois Spotly ouvert dans le navigateur :
+Une fois Spovo ouvert dans le navigateur :
 
 1. **Prénom :** saisissez votre prénom.
 2. **Adresse :** indiquez une adresse à partir de laquelle rechercher des activités.
@@ -190,7 +190,7 @@ Une fois Spotly ouvert dans le navigateur :
 5. **Ambiance :** choisissez éventuellement Indoor ou Outdoor.
 6. Cliquez sur **Voir mes recommandations**.
 
-Spotly récupère les activités depuis OpenStreetMap, recherche les lieux situés dans le rayon choisi et les classe avec un algorithme de recommandation par score pondéré.
+Spovo récupère les activités depuis OpenStreetMap, recherche les lieux situés dans le rayon choisi et les classe avec un algorithme de recommandation par score pondéré.
 
 L'application dispose également d'activités réelles d'Île-de-France préchargées dans PostgreSQL. Elles sont utilisées lorsque les serveurs Overpass ne répondent pas.
 
