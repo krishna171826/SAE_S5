@@ -141,23 +141,35 @@ Cette commande crée automatiquement les tables nécessaires au fonctionnement d
 >
 > Les migrations déjà exécutées ne sont pas appliquées une deuxième fois.
 
+
 **5. Importer les activités OpenStreetMap :**
 
 ```bash
 npm run seed
 ```
 
-Cette commande importe automatiquement dans PostgreSQL les **vraies activités OpenStreetMap d'Île-de-France**, préalablement extraites et enregistrées dans le fichier `data/activities-idf.json`.
+Cette commande importe automatiquement dans PostgreSQL les **activités OpenStreetMap d'Île-de-France**, préalablement extraites et enregistrées dans le fichier `data/activities-idf.json`.
 
 L'importation peut prendre un certain temps lors de la première installation.
 
-> ✅ Les activités sont maintenant enregistrées dans PostgreSQL.
+**Pourquoi cette méthode ?**
+
+Les serveurs **Overpass API** étant régulièrement surchargés, la récupération des activités peut parfois échouer ou prendre trop de temps.
+
+Pour éviter ce problème, Spovo utilise un **système de secours avec mise à jour automatique** :
+
+- **Si Overpass API est disponible :** les activités sont récupérées et un **upsert** est effectué dans PostgreSQL pour ajouter les nouvelles activités et mettre à jour celles déjà existantes.
+- **Si Overpass API est surchargée ou indisponible :** Spovo utilise directement les activités déjà enregistrées dans PostgreSQL.
+- **Lors de la première installation :** le fichier `data/activities-idf.json` permet d'initialiser la base de données sans dépendre des serveurs Overpass.
+
+> ✅ **Les activités restent accessibles même en cas d'indisponibilité d'Overpass API.**
+>
+> Les données sont automatiquement ajoutées ou mises à jour dans PostgreSQL lors d'une récupération réussie.
 >
 > Aucun téléchargement supplémentaire ni extraction manuelle n'est nécessaire.
->
-> Spovo pourra utiliser ces données même si les serveurs Overpass sont temporairement indisponibles.
 
 **Source des données :** OpenStreetMap, extraction Île-de-France téléchargée depuis Geofabrik, sous licence ODbL. © [Contributeurs OpenStreetMap](https://www.openstreetmap.org/copyright).
+
 
 ### 5. 💻 Lancer le frontend React
 
