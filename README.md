@@ -2,6 +2,8 @@
 
 Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. **Spovo** est une application web permettant aux utilisateurs de rechercher des activités géolocalisées à faire entre amis (via OpenStreetMap et PostGIS), puis de les classer grâce à un algorithme de recommandation par score pondéré.
 
+Lien du projet : https://github.com/krishna171826/SAE_S5
+
 ---
 
 ## 🛠️ Stack Technique
