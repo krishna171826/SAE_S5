@@ -1,6 +1,6 @@
 # SAE S5 - Plateforme de Recommandation d'Activités Géolocalisées
 
-Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. Cette application web innovante permet aux utilisateurs de rechercher des activités géolocalisées (via OpenStreetMap et PostGIS) et compare les performances de différents algorithmes de recommandation.
+Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. **Spotly** est une application web permettant aux utilisateurs de rechercher des activités géolocalisées à faire entre amis (via OpenStreetMap et PostGIS), puis de les classer grâce à un algorithme de recommandation par score pondéré.
 
 ---
 
@@ -16,16 +16,16 @@ Bienvenue sur le dépôt principal de notre projet **SAÉ BUT3**. Cette applicat
 
 ## 📂 Architecture du Projet (Submodules)
 
-# Qu'est-ce qu'un sous-module Git ?
+### Qu'est-ce qu'un sous-module Git ?
+
 Un sous-module permet d'inclure un dépôt Git indépendant à l'intérieur d'un autre. Dans notre projet, le dépôt principal pointe vers les sous-dossiers front et back. Il est donc crucial d'initialiser et de mettre à jour ces sous-modules correctement lors du clonage du projet.
 
-
 Le dépôt principal utilise des **sous-modules Git** pour organiser le code source :
+
 * `SAE_S5-Frontend/` : Code source de l'interface utilisateur (React).
 * `SAE_S5-Backend/` : Code source du serveur Express et du sous-dossier `recommendation-engine/` (FastAPI).
 
 ---
-
 
 ## 🚀 Guide d'installation et de démarrage
 
@@ -37,8 +37,8 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 - **Git** — Pour récupérer le projet.
 - **Docker Desktop** (avec Docker Compose) — Pour lancer la base de données, le backend et le moteur de recommandation.
-- **Node.js 22.12 ou supérieur** et **npm** — Pour lancer l'interface React.
-- **Une connexion Internet** — Pour récupérer les activités depuis OpenStreetMap.
+- **Node.js 22.12 ou supérieur** et **npm** — Pour lancer l'interface React et importer les activités.
+- **Une connexion Internet** — Pour le géocodage des adresses et les requêtes OpenStreetMap.
 
 ### 1. 📥 Cloner le projet
 
@@ -52,6 +52,7 @@ cd SAE_S5
 Cette commande récupère le dépôt principal ainsi que ses deux sous-modules : **Frontend** et **Backend**.
 
 > **Si le projet a déjà été cloné sans ses sous-modules :**
+>
 > ```bash
 > git submodule update --init --recursive
 > ```
@@ -91,7 +92,6 @@ Pour vérifier que les conteneurs sont démarrés :
 ```bash
 docker compose ps
 ```
-
 
 ### 4. 🗄️ Initialiser la base de données
 
@@ -137,10 +137,27 @@ npm run migrate up
 
 Cette commande crée automatiquement les tables nécessaires au fonctionnement de Spotly : utilisateurs, activités, catégories, recherches et recommandations.
 
-> ✅ La base de données est maintenant initialisée.
+> ✅ La structure de la base de données est maintenant initialisée.
 >
 > Les migrations déjà exécutées ne sont pas appliquées une deuxième fois.
 
+**5. Importer les activités OpenStreetMap :**
+
+```bash
+npm run seed
+```
+
+Cette commande importe automatiquement dans PostgreSQL les **vraies activités OpenStreetMap d'Île-de-France**, préalablement extraites et enregistrées dans le fichier `data/activities-idf.json`.
+
+L'importation peut prendre un certain temps lors de la première installation.
+
+> ✅ Les activités sont maintenant enregistrées dans PostgreSQL.
+>
+> Aucun téléchargement supplémentaire ni extraction manuelle n'est nécessaire.
+>
+> Spotly pourra utiliser ces données même si les serveurs Overpass sont temporairement indisponibles.
+
+**Source des données :** OpenStreetMap, extraction Île-de-France téléchargée depuis Geofabrik, sous licence ODbL. © [Contributeurs OpenStreetMap](https://www.openstreetmap.org/copyright).
 
 ### 5. 💻 Lancer le frontend React
 
@@ -174,6 +191,8 @@ Une fois Spotly ouvert dans le navigateur :
 6. Cliquez sur **Voir mes recommandations**.
 
 Spotly récupère les activités depuis OpenStreetMap, recherche les lieux situés dans le rayon choisi et les classe avec un algorithme de recommandation par score pondéré.
+
+L'application dispose également d'activités réelles d'Île-de-France préchargées dans PostgreSQL. Elles sont utilisées lorsque les serveurs Overpass ne répondent pas.
 
 > Les résultats dépendent des données disponibles dans OpenStreetMap. Si aucune activité n'est trouvée, essayez de sélectionner un rayon plus grand ou d'autres catégories.
 
@@ -248,5 +267,3 @@ Le projet utilise GitHub pour organiser le travail en équipe.
 Chaque sous-module dispose de son propre dépôt Git.
 
 ---
-
-
